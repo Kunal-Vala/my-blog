@@ -41,3 +41,24 @@ export const authenticate = (
         return res.status(401).json({ message: "Unauthorized" })
     }
 }
+
+export const authorizeRoles = (allowedRoles: string[]) => {
+    return (req: Request, res: Response, next: NextFunction) => {
+        // 1️⃣ User must already be authenticated
+        if (!req.user) {
+            return res.status(401).json({
+                message: "Unauthorized",
+            })
+        }
+
+        // 2️⃣ Check role
+        if (!allowedRoles.includes(req.user.role)) {
+            return res.status(403).json({
+                message: "Forbidden",
+            })
+        }
+
+        // 3️⃣ Role allowed → continue
+        next()
+    }
+}
