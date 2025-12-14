@@ -32,6 +32,7 @@ export const getPostById = async (req: Request, res: Response) => {
 
 export const createPost = async (req: Request, res: Response) => {
     try {
+        const user = req.user
         const { title, content, published } = req.body
         if (!title || !content) {
             return res.status(400).json({
@@ -53,6 +54,7 @@ export const createPost = async (req: Request, res: Response) => {
                 content,
                 published: Boolean(published),
                 publishedAt: published ? new Date() : null,
+                authorId : user?.userId
             },
         })
 
