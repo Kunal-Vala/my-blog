@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
 import { prisma } from "../lib/prisma"
-import bcrypt from "bcryptjs"
 import { createHash, checkPassword } from '../lib/password'
+import jwt from 'jsonwebtoken'
 
 export const register = async (req: Request, res: Response) => {
     try {
@@ -72,6 +72,71 @@ export const register = async (req: Request, res: Response) => {
         console.error(error)
         res.status(500).json({
             message: "Failed to register user",
+        })
+    }
+}
+
+
+export const login = async (req: Request, res: Response) => {
+    try {
+        const { email, password } = req.body
+
+        // 1️⃣ Validate input
+        if (!email || !password) {
+            return res.status(400).json({
+                message: "Email and password are required",
+            })
+        }
+
+        // 2️⃣ Find user by email
+        const user = await prisma.user.findUnique({
+            where: { email },
+        })
+
+        // 3️⃣ Generic auth error (do NOT leak info)
+        if (!user) {
+            return res.status(401).json({
+                message: "Invalid credentials",
+            })
+        }
+
+        // 4️⃣ Verify password
+        const isPasswordValid = await checkPassword(password, user.password)
+
+        if (!isPasswordValid) {
+            return res.status(401).json({
+                message: "Invalid credentials",
+            })
+        }
+
+        // 5️⃣ Generate JWT
+        const token = jwt.sign(
+            {
+                userId: user.id,
+                role: user.role,
+            },
+            process.env.JWT_SECRET as string,
+            {
+                expiresIn: "7d",
+            }
+        )
+
+        // 6️⃣ Send response
+        res.status(200).json({
+            message: "Login successful",
+            token,
+            user: {
+                id: user.id,
+                email: user.email,
+                username: user.username,
+                name: user.name,
+                role: user.role,
+            },
+        })
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({
+            message: "Login failed",
         })
     }
 }
