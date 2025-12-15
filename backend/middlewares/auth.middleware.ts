@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express"
 import jwt, { JwtPayload } from "jsonwebtoken"
+import { prisma } from "../lib/prisma"
 
 export const authenticate = (
     req: Request,
@@ -60,5 +61,50 @@ export const authorizeRoles = (allowedRoles: string[]) => {
 
         // 3️⃣ Role allowed → continue
         next()
+    }
+}
+
+export const checkPostOwnership = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+
+        if (!req.user) {
+            return res.status(401).json({ message: "Unauthorized" })
+        }
+
+        const { userId, role } = req.user
+
+        if (role === 'ADMIN') {
+            return next()
+        }
+
+        const { id: postId } = req.params
+
+
+        if (!postId) {
+            return res.status(400).json({ message: "Post ID is required" })
+        }
+
+        const post = await prisma.post.findUnique({
+            where: {
+                id: postId
+            }
+        })
+
+        if (!post) {
+            return res.status(404).json({
+                message: 'Post Not Found'
+            })
+        }
+
+        if (post.authorId !== userId) {
+            return res.status(403).json({
+                message: 'Forbidden'
+            })
+        }
+
+        next()
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: "Ownership Check Failed" })
     }
 }
