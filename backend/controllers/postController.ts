@@ -34,11 +34,6 @@ export const createPost = async (req: Request, res: Response) => {
     try {
         const user = req.user
         const { title, content, published } = req.body
-        if (!title || !content) {
-            return res.status(400).json({
-                message: "Title and content are required",
-            })
-        }
 
         const slug = title
             .toLowerCase()
