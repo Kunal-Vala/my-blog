@@ -89,7 +89,7 @@ export const updatePost = async (req: Request, res: Response) => {
                 content,
                 slug,
                 published: Boolean(published),
-                publishedAt : new Date()
+                publishedAt: new Date()
 
             }
         })
@@ -98,5 +98,27 @@ export const updatePost = async (req: Request, res: Response) => {
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "Failed to update post" })
+    }
+}
+
+export const deletePost = async (req: Request, res: Response) => {
+    try {
+        if (!req.user) {
+            return res.status(401).json({ message: "Unauthorized" })
+        }
+        const { id: postId } = req.params
+
+        const post = await prisma.post.delete({
+            where: {
+                id: postId,
+            }
+        })
+
+        res.status(200).json({
+            message: 'Post Deleted Successfully'
+        })
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Failed to delete post" })
     }
 }

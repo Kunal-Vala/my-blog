@@ -1,6 +1,6 @@
 import { Router } from "express";
 const router = Router()
-import { getPosts, getPostById, createPost, updatePost } from '../controllers/postController'
+import { getPosts, getPostById, createPost, updatePost , deletePost} from '../controllers/postController'
 import { authenticate, authorizeRoles, checkPostOwnership } from "../middlewares/auth.middleware";
 import { validate } from "../middlewares/validate";
 import { CreatePostSchema } from "../schemas/post.schema";
@@ -31,6 +31,14 @@ router.put(
 router.get(
     '/:id',
     getPostById
+)
+
+router.delete(
+    '/:id',
+    authenticate,
+    authorizeRoles(['AUTHOR']),
+    checkPostOwnership,
+    deletePost
 )
 
 export { router }
