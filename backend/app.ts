@@ -1,9 +1,14 @@
 import express from "express"
+import cors from "cors"
 import { router as postRouter } from './routes/posts'
 import { router as authRouter } from './routes/auth'
 import { router as commentRouter} from "./routes/comments"
 const app = express()
 
+app.use(cors({
+  origin: 'http://localhost:3001',
+  credentials: true,
+}))
 app.use(express.json())
 
 app.use('/api/post', postRouter)
