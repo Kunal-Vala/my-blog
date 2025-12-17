@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
 import { prisma } from "../lib/prisma"
 
-export const getPosts = async (req: Request, res: Response) => {
+export const getAllPosts = async (req: Request, res: Response) => {
     try {
         const posts = await prisma.post.findMany()
         res.json(posts)
@@ -120,5 +120,23 @@ export const deletePost = async (req: Request, res: Response) => {
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "Failed to delete post" })
+    }
+}
+
+
+export const getPostsByUser = async (req: Request, res: Response) => {
+    try {
+        if (!req.user) {
+            return res.status(401).json({ message: "Unauthorized" })
+        }
+        const posts = await prisma.post.findMany({
+            where:{
+                authorId: req.user.userId
+            }
+        })
+        res.json(posts)
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({ message: "Failed to fetch posts" })
     }
 }
