@@ -13,7 +13,7 @@ export const getAllPosts = async (req: Request, res: Response) => {
 
 export const getPostById = async (req: Request, res: Response) => {
     try {
-        const { id } = req.params
+        const { id } = req.params as { id: string }
         const post = await prisma.post.findUnique({
             where: {
                 id,
@@ -49,7 +49,7 @@ export const createPost = async (req: Request, res: Response) => {
                 content,
                 published: Boolean(published),
                 publishedAt: published ? new Date() : null,
-                authorId: user?.userId
+                authorId: user?.userId || null
             },
         })
 
@@ -65,7 +65,7 @@ export const updatePost = async (req: Request, res: Response) => {
         if (!req.user) {
             return res.status(401).json({ message: "Unauthorized" })
         }
-        const { id: postId } = req.params
+        const { id: postId } = req.params as { id: string }
         const { title, content, published } = req.body
 
         if (!title || !content) {
@@ -106,7 +106,7 @@ export const deletePost = async (req: Request, res: Response) => {
         if (!req.user) {
             return res.status(401).json({ message: "Unauthorized" })
         }
-        const { id: postId } = req.params
+        const { id: postId } = req.params as { id: string }
 
         const post = await prisma.post.delete({
             where: {

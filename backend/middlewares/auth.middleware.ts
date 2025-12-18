@@ -24,6 +24,10 @@ export const authenticate = (
 
         const token = parts[1]
 
+        if (!token) {
+            return res.status(401).json({ message: "Unauthorized" })
+        }
+
         // 3️⃣ Verify JWT
         const decoded = jwt.verify(
             token,

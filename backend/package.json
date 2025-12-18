@@ -2,10 +2,12 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/app.js",
   "scripts": {
     "dev": "tsx watch app.ts",
-    "start": "tsx app.ts"
+    "build": "tsc",
+    "start": "node dist/app.js",
+    "prod": "tsx app.ts"
   },
   "keywords": [],
   "author": "",
@@ -28,5 +30,8 @@
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
     "zod": "^4.2.0"
+  },
+  "engines": {
+    "node": "18.x"
   }
 }
