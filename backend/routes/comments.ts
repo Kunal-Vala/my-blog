@@ -8,11 +8,11 @@ import {
   createComment,
   updateComment,
   deleteComment,
-} from "../controllers/commentsController"
-import { authenticate, authorizeRoles } from "../middlewares/auth.middleware"
-import { validate } from "../middlewares/validate"
-import { CreateCommentSchema, UpdateCommentSchema, CommentIdSchema, CommentPostParamSchema } from "../schemas/comment.schema"
-import { PostIdSchema } from "../schemas/post.schema"
+} from "../controllers/commentsController.js"
+import { authenticate, authorizeRoles } from "../middlewares/auth.middleware.js"
+import { validate } from "../middlewares/validate.js"
+import { CreateCommentSchema, UpdateCommentSchema, CommentIdSchema, CommentPostParamSchema } from "../schemas/comment.schema.js"
+import { PostIdSchema } from "../schemas/post.schema.js"
 
 router.get(
   "/all",

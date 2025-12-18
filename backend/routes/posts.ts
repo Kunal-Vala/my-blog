@@ -1,9 +1,9 @@
 import { Router } from "express";
 const router = Router()
-import { getAllPosts, getPostById, createPost, updatePost, deletePost ,getPostsByUser } from '../controllers/postController'
-import { authenticate, authorizeRoles, checkPostOwnership } from "../middlewares/auth.middleware";
-import { validate } from "../middlewares/validate";
-import { CreatePostSchema, UpdatePostSchema, PostIdSchema } from "../schemas/post.schema";
+import { getAllPosts, getPostById, createPost, updatePost, deletePost ,getPostsByUser } from '../controllers/postController.js'
+import { authenticate, authorizeRoles, checkPostOwnership } from "../middlewares/auth.middleware.js";
+import { validate } from "../middlewares/validate.js";
+import { CreatePostSchema, UpdatePostSchema, PostIdSchema } from "../schemas/post.schema.js";
 
 router.get(
     '/all',

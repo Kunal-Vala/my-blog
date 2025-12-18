@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
-import { prisma } from "../lib/prisma"
-import { createHash, checkPassword } from '../lib/password'
+import { prisma } from "../lib/prisma.js"
+import { createHash, checkPassword } from '../lib/password.js'
 import jwt from 'jsonwebtoken'
 
 export const register = async (req: Request, res: Response) => {

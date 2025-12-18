@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express"
 import jwt, { JwtPayload } from "jsonwebtoken"
-import { prisma } from "../lib/prisma"
+import { prisma } from "../lib/prisma.js"
 
 export const authenticate = (
     req: Request,
