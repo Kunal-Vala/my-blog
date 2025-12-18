@@ -4,7 +4,7 @@
   "main": "dist/app.js",
   "scripts": {
     "dev": "tsx watch app.ts",
-    "build": "prisma generate && tsc",
+    "build": "rimraf dist && prisma generate && tsc",
     "start": "node dist/app.js",
     "prod": "tsx app.ts"
   },
@@ -14,6 +14,7 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^25.0.1",
     "prisma": "6.19",
+    "rimraf": "^6.0.1",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3"
   },
