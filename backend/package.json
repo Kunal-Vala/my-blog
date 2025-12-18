@@ -1,17 +1,13 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
   "main": "dist/app.js",
   "scripts": {
     "dev": "tsx watch app.ts",
-    "build": "tsc",
+    "build": "prisma generate && tsc",
     "start": "node dist/app.js",
     "prod": "tsx app.ts"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "type": "module",
   "devDependencies": {
     "@types/express": "^5.0.6",
@@ -32,6 +28,6 @@
     "zod": "^4.2.0"
   },
   "engines": {
-    "node": "18.x"
+    "node": "24.x"
   }
 }
