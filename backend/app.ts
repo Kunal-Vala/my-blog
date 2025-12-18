@@ -5,8 +5,13 @@ import { router as authRouter } from './routes/auth.js'
 import { router as commentRouter} from "./routes/comments.js"
 const app = express()
 
+// Allow multiple frontend origins via comma-separated env FRONTEND_ORIGIN
+const allowedOrigins = (process.env.FRONTEND_ORIGIN || 'http://localhost:3001')
+  .split(',')
+  .map((s) => s.trim())
+
 app.use(cors({
-  origin: process.env.FRONTEND_ORIGIN || 'http://localhost:3001',
+  origin: allowedOrigins,
   credentials: true,
 }))
 app.use(express.json())
