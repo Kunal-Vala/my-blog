@@ -38,8 +38,10 @@ button:hover {
 }
 
 .btn-primary {
-  background-color: #007bff;
-  color: white;
+  /* background-color: #007bff; */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: rgb(5, 0, 0);
+  
 }
 
 .btn-danger {
