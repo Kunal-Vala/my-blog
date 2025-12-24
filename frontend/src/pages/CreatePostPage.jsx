@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Editor } from '@tinymce/tinymce-react'
 import { useNavigate } from 'react-router-dom'
 import { postService } from '../api/postService'
 import './CreatePostPage.css'
@@ -15,6 +16,12 @@ export default function CreatePostPage() {
   const [error, setError] = useState(null)
   const [success, setSuccess] = useState(null)
 
+  // Helper to validate if rich-text content is effectively empty
+  const isContentEmpty = (html) => {
+    const text = html.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').trim()
+    return text.length === 0
+  }
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target
     setFormData((prev) => ({
@@ -25,7 +32,7 @@ export default function CreatePostPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (!formData.title.trim() || !formData.content.trim()) {
+    if (!formData.title.trim() || isContentEmpty(formData.content)) {
       setError('Title and content are required')
       return
     }
@@ -78,15 +85,41 @@ export default function CreatePostPage() {
 
           <div className="form-group">
             <label htmlFor="content">Content *</label>
-            <textarea
+            <Editor
               id="content"
-              name="content"
+              apiKey={import.meta.env.VITE_TINYMCE_API_KEY || ''}
               value={formData.content}
-              onChange={handleChange}
-              placeholder="Enter post content"
-              rows="10"
-              required
-            ></textarea>
+              onEditorChange={(newContent) =>
+                setFormData((prev) => ({ ...prev, content: newContent }))
+              }
+              init={{
+                height: 500,
+                menubar: false,
+                plugins: [
+                  'advlist',
+                  'autolink',
+                  'lists',
+                  'link',
+                  'image',
+                  'charmap',
+                  'preview',
+                  'anchor',
+                  'searchreplace',
+                  'visualblocks',
+                  'code',
+                  'fullscreen',
+                  'insertdatetime',
+                  'media',
+                  'table',
+                  'help',
+                  'wordcount',
+                ],
+                toolbar:
+                  'undo redo | blocks | bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
+                content_style:
+                  'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+              }}
+            />
           </div>
 
           <div className="form-group">
