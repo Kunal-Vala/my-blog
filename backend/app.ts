@@ -6,7 +6,8 @@ import { router as commentRouter} from "./routes/comments.js"
 const app = express()
 
 // Allow multiple frontend origins via comma-separated env FRONTEND_ORIGIN
-const allowedOrigins = (process.env.FRONTEND_ORIGIN || 'http://localhost:3001')
+// Include common dev/preview ports by default
+const allowedOrigins = (process.env.FRONTEND_ORIGIN || 'http://localhost:3001,http://localhost:5173,http://localhost:4173')
   .split(',')
   .map((s) => s.trim())
 
