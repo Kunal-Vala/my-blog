@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { postService } from '../api/postService'
+import DOMPurify from 'dompurify'
+
 import './HomePage.css'
 
 export default function HomePage() {
@@ -46,7 +48,16 @@ export default function HomePage() {
               <p className="post-meta">
                 By {post.author?.username || 'Unknown'} • {new Date(post.createdAt).toLocaleDateString()}
               </p>
-              <p className="post-excerpt">{post.content?.substring(0, 100)}...</p>
+              {
+                (() => {
+                  const textOnly = DOMPurify.sanitize(post.content || '', {
+                    ALLOWED_TAGS: [],
+                    ALLOWED_ATTR: [],
+                  })
+                  const excerpt = textOnly.length > 140 ? `${textOnly.slice(0, 140)}…` : textOnly
+                  return <p className="post-excerpt">{excerpt}</p>
+                })()
+              }
               <div className="post-tags">
                 {post.tags?.map((tag) => (
                   <span key={tag} className="tag">{tag}</span>
