@@ -7,8 +7,7 @@ import { CreatePostSchema, UpdatePostSchema, PostIdSchema } from "../schemas/pos
 
 router.get(
     '/all',
-    authenticate,
-    authorizeRoles(["USER", "AUTHOR", "ADMIN"]),
+    // Public endpoint: fetch all posts without auth
     getAllPosts
 )
 
