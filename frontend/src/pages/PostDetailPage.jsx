@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { postService } from '../api/postService'
 import { commentService } from '../api/commentService'
 import CommentsSection from '../components/CommentsSection'
+import DOMPurify from 'dompurify'
 import './PostDetailPage.css'
 
 export default function PostDetailPage() {
@@ -76,9 +77,10 @@ export default function PostDetailPage() {
           ))}
         </div>
 
-        <div className="post-content">
-          {post.content}
-        </div>
+        <div
+          className="post-content"
+          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content || '') }}
+        />
       </div>
 
       <CommentsSection postId={id} />
