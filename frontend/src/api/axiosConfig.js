@@ -3,7 +3,7 @@ import axios from 'axios'
 // Use VITE_API_URL when provided, fallback to local dev API
 // IMPORTANT: set VITE_API_URL WITHOUT a trailing slash, and include /api suffix
 // Example: VITE_API_URL=https://your-backend.up.railway.app/api
-const API_BASE_URL = (import.meta?.env?.VITE_API_URL || 'http://localhost:3000/api')
+const API_BASE_URL = (import.meta.env.VITE_API_URL || 'http://localhost:3000/api')
 
 const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
