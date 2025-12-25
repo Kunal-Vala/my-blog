@@ -23,6 +23,7 @@ export default function CreatePostPage() {
   }
 
   const handleChange = (e) => {
+    console.log('[CreatePostPage.handleChange] Form field changed:', e.target.name);
     const { name, value, type, checked } = e.target
     setFormData((prev) => ({
       ...prev,
@@ -31,6 +32,7 @@ export default function CreatePostPage() {
   }
 
   const handleSubmit = async (e) => {
+    console.log('[CreatePostPage.handleSubmit] Submitting post:', { title: formData.title });
     e.preventDefault()
     if (!formData.title.trim() || isContentEmpty(formData.content)) {
       setError('Title and content are required')

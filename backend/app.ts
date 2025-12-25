@@ -22,6 +22,7 @@ app.use('/api/auth', authRouter)
 app.use('/api/comment', commentRouter)
 
 app.get('/', (req, res) => {
+  console.log('[GET /] Root route accessed');
   res.send('SERVER RUNNING')
 
 })

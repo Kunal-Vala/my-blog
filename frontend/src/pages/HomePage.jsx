@@ -15,6 +15,7 @@ export default function HomePage() {
   }, [])
 
   const fetchPosts = async () => {
+    console.log('[HomePage.fetchPosts] Fetching all posts');
     try {
       setLoading(true)
       const data = await postService.getAllPosts()

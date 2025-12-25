@@ -2,6 +2,7 @@ import { Request, Response } from "express"
 import { prisma } from "../lib/prisma.js"
 
 export const getAllPosts = async (req: Request, res: Response) => {
+    console.log('[postController.getAllPosts] Fetching all posts');
     try {
         const posts = await prisma.post.findMany()
         res.json(posts)
@@ -12,6 +13,7 @@ export const getAllPosts = async (req: Request, res: Response) => {
 }
 
 export const getPostById = async (req: Request, res: Response) => {
+    console.log('[postController.getPostById] Fetching post:', req.params?.id);
     try {
         const { id } = req.params as { id: string }
         const post = await prisma.post.findUnique({
@@ -31,6 +33,7 @@ export const getPostById = async (req: Request, res: Response) => {
 }
 
 export const createPost = async (req: Request, res: Response) => {
+    console.log('[postController.createPost] Creating post:', { title: req.body?.title, userId: req.user?.userId });
     try {
         const user = req.user
         const { title, content, published } = req.body
@@ -61,6 +64,7 @@ export const createPost = async (req: Request, res: Response) => {
 }
 
 export const updatePost = async (req: Request, res: Response) => {
+    console.log('[postController.updatePost] Updating post:', { postId: req.params?.id, userId: req.user?.userId });
     try {
         if (!req.user) {
             return res.status(401).json({ message: "Unauthorized" })
@@ -102,6 +106,7 @@ export const updatePost = async (req: Request, res: Response) => {
 }
 
 export const deletePost = async (req: Request, res: Response) => {
+    console.log('[postController.deletePost] Deleting post:', { postId: req.params?.id, userId: req.user?.userId });
     try {
         if (!req.user) {
             return res.status(401).json({ message: "Unauthorized" })
@@ -125,6 +130,7 @@ export const deletePost = async (req: Request, res: Response) => {
 
 
 export const getPostsByUser = async (req: Request, res: Response) => {
+    console.log('[postController.getPostsByUser] Fetching posts for user:', req.user?.userId);
     try {
         if (!req.user) {
             return res.status(401).json({ message: "Unauthorized" })

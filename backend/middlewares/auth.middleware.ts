@@ -7,6 +7,7 @@ export const authenticate = (
     res: Response,
     next: NextFunction
 ) => {
+    console.log('[auth.middleware.authenticate] Authenticating request');
     try {
         const authorizationHeader = req.headers.authorization
 
@@ -49,6 +50,7 @@ export const authenticate = (
 
 export const authorizeRoles = (allowedRoles: string[]) => {
     return (req: Request, res: Response, next: NextFunction) => {
+        console.log('[auth.middleware.authorizeRoles] Checking roles:', { allowedRoles, userRole: req.user?.role });
         // 1️⃣ User must already be authenticated
         if (!req.user) {
             return res.status(401).json({
@@ -69,6 +71,7 @@ export const authorizeRoles = (allowedRoles: string[]) => {
 }
 
 export const checkPostOwnership = async (req: Request, res: Response, next: NextFunction) => {
+    console.log('[auth.middleware.checkPostOwnership] Checking post ownership:', { postId: req.params?.id, userId: req.user?.userId });
     try {
 
         if (!req.user) {

@@ -15,6 +15,7 @@ export default function RegisterPage() {
   const [error, setError] = useState(null)
 
   const handleChange = (e) => {
+    console.log('[RegisterPage.handleChange] Form field changed:', e.target.name);
     const { name, value } = e.target
     setFormData((prev) => ({
       ...prev,
@@ -23,6 +24,7 @@ export default function RegisterPage() {
   }
 
   const handleSubmit = async (e) => {
+    console.log('[RegisterPage.handleSubmit] Attempting registration:', { email: formData.email, username: formData.username });
     e.preventDefault()
     try {
       setLoading(true)

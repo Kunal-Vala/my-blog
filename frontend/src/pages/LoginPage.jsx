@@ -13,6 +13,7 @@ export default function LoginPage({ setToken, setUser }) {
   const [error, setError] = useState(null)
 
   const handleChange = (e) => {
+    console.log('[LoginPage.handleChange] Form field changed:', e.target.name);
     const { name, value } = e.target
     setFormData((prev) => ({
       ...prev,
@@ -21,6 +22,7 @@ export default function LoginPage({ setToken, setUser }) {
   }
 
   const handleSubmit = async (e) => {
+    console.log('[LoginPage.handleSubmit] Attempting login:', { email: formData.email });
     e.preventDefault()
     try {
       setLoading(true)

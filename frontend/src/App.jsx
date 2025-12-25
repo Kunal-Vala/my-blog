@@ -12,6 +12,7 @@ function App() {
   const [user, setUser] = useState(localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null)
 
   const handleLogout = () => {
+    console.log('[App.handleLogout] User logging out');
     localStorage.removeItem('token')
     localStorage.removeItem('user')
     setToken(null)

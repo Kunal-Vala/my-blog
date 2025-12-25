@@ -16,6 +16,7 @@ export default function CommentsSection({ postId }) {
   }, [postId])
 
   const fetchComments = async () => {
+    console.log('[CommentsSection.fetchComments] Fetching comments for post:', postId);
     try {
       setLoading(true)
       const data = await commentService.getCommentsByPost(postId)
@@ -30,6 +31,7 @@ export default function CommentsSection({ postId }) {
   }
 
   const handleSubmit = async (e) => {
+    console.log('[CommentsSection.handleSubmit] Submitting comment for post:', postId);
     e.preventDefault()
     if (!newComment.trim()) return
 
@@ -56,6 +58,7 @@ export default function CommentsSection({ postId }) {
   }
 
   const handleDelete = async (commentId) => {
+    console.log('[CommentsSection.handleDelete] Delete button clicked for comment:', commentId);
     if (confirm('Delete this comment?')) {
       try {
         await commentService.deleteComment(commentId)

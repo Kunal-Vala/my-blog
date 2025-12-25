@@ -19,6 +19,7 @@ export default function PostDetailPage() {
   }, [id])
 
   const fetchPost = async () => {
+    console.log('[PostDetailPage.fetchPost] Fetching post:', id);
     try {
       setLoading(true)
       const data = await postService.getPostById(id)
@@ -35,6 +36,7 @@ export default function PostDetailPage() {
   }
 
   const handleDelete = async () => {
+    console.log('[PostDetailPage.handleDelete] Delete button clicked for post:', id);
     if (confirm('Are you sure you want to delete this post?')) {
       try {
         await postService.deletePost(id)

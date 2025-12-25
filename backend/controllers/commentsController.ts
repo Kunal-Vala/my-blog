@@ -2,6 +2,7 @@ import { Request, Response } from "express"
 import { prisma } from "../lib/prisma.js"
 
 export const getAllComments = async (req: Request, res: Response) => {
+    console.log('[commentsController.getAllComments] Fetching all comments');
     try {
         const comments = await prisma.comment.findMany()
         res.json(comments)
@@ -12,6 +13,7 @@ export const getAllComments = async (req: Request, res: Response) => {
 }
 
 export const getCommentById = async (req: Request, res: Response) => {
+    console.log('[commentsController.getCommentById] Fetching comment:', req.params?.id);
     try {
         const { id } = req.params
         if (!id) {
@@ -31,6 +33,7 @@ export const getCommentById = async (req: Request, res: Response) => {
 }
 
 export const getCommentsByPost = async (req: Request, res: Response) => {
+    console.log('[commentsController.getCommentsByPost] Fetching comments for post:', req.params?.postId);
     try {
         const { postId } = req.params
         if (!postId) {
@@ -47,6 +50,7 @@ export const getCommentsByPost = async (req: Request, res: Response) => {
 }
 
 export const getCommentsByUser = async (req: Request, res: Response) => {
+    console.log('[commentsController.getCommentsByUser] Fetching comments for user:', req.user?.userId);
     try {
         if (!req.user) {
             return res.status(401).json({ message: "Unauthorized" })
@@ -62,6 +66,7 @@ export const getCommentsByUser = async (req: Request, res: Response) => {
 }
 
 export const createComment = async (req: Request, res: Response) => {
+    console.log('[commentsController.createComment] Creating comment:', { postId: req.body?.postId, userId: req.user?.userId });
     try {
         if (!req.user) {
             return res.status(401).json({ message: "Unauthorized" })
@@ -90,6 +95,7 @@ export const createComment = async (req: Request, res: Response) => {
 }
 
 export const updateComment = async (req: Request, res: Response) => {
+    console.log('[commentsController.updateComment] Updating comment:', { commentId: req.params?.id, userId: req.user?.userId });
     try {
         if (!req.user) {
             return res.status(401).json({ message: "Unauthorized" })
@@ -130,6 +136,7 @@ export const updateComment = async (req: Request, res: Response) => {
 }
 
 export const deleteComment = async (req: Request, res: Response) => {
+    console.log('[commentsController.deleteComment] Deleting comment:', { commentId: req.params?.id, userId: req.user?.userId });
     try {
         if (!req.user) {
             return res.status(401).json({ message: "Unauthorized" })
