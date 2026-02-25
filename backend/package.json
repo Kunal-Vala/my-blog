@@ -4,7 +4,7 @@
   "main": "dist/app.js",
   "scripts": {
     "dev": "tsx watch app.ts",
-    "build": "npx prisma generate && tsc",
+    "build": "npm ci && npx prisma generate && tsc",
     "start": "node dist/app.js",
     "prod": "tsx app.ts"
   },
